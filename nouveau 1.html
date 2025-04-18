@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVIDIA CRYPTO - Packs d'Abonnement</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #f0f0f0;
+        }
+        
+        header {
+            background-color: #2a2a2a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: #76b900;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(118, 185, 0, 0.5);
+            margin: 0;
+            padding: 10px 0;
+            text-transform: uppercase;
+        }
+        
+        /* Style pour la bande défilante */
+        .ticker-tape {
+            background-color: #111;
+            border-top: 2px solid #76b900;
+            border-bottom: 2px solid #76b900;
+            padding: 12px 0;
+            overflow: hidden;
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .ticker-tape-content {
+            display: inline-block;
+            animation: ticker-tape-scroll 35s linear infinite;
+            color: #fff;
+            font-size: 16px;
+            padding-left: 100%;
+            font-weight: bold;
+        }
+        
+        .ticker-tape-content span {
+            margin-right: 50px;
+        }
+        
+        .ticker-tape-content .highlight {
+            color: #76b900;
+        }
+        
+        @keyframes ticker-tape-scroll {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                transform: translate3d(-100%, 0, 0);
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .about-section {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px auto;
+            max-width: 1000px;
+            line-height: 1.6;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin: 40px 0;
+            color: #76b900;
+            font-size: 36px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .subscription-plans {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .plan {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            overflow: hidden;
+            width: 350px;
+            transition: transform 0.3s ease;
+        }
+        
+        .plan:hover {
+            transform: translateY(-10px);
+        }
+        
+        .plan-header {
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .silver .plan-header {
+            background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+            color: #333;
+        }
+        
+        .gold .plan-header {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+        
+        .vip .plan-header {
+            background: linear-gradient(200deg, #FFD900, #c0c0c0, #e8e8e8);
+            color: #200;
+        }
+        
+        .plan-title {
+            font-size: 24px;
+            margin: 0;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .plan-price {
+            font-size: 36px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .plan-billing {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .plan-features {
+            padding: 20px;
+            list-style: none;
+            margin: 0;
+        }
+        
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #444;
+            display: flex;
+            align-items: center;
+        }
+        
+        .plan-features li:before {
+            content: "✓";
+            color: #76b900;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .plan-footer {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .btn-order {
+            display: inline-block;
+            background-color: #76b900;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn-order:hover {
+            background-color: #5c9100;
+        }
+        
+        .payment-modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .payment-modal-content {
+            background-color: #2a2a2a;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .payment-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #76b900;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .btn-pay {
+            display: inline-block;
+            background-color: #76b900;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        
+        .btn-pay:hover {
+            background-color: #5c9100;
+        }
+        
+        .close-modal {
+            font-size: 18px;
+            color: #aaa;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        
+        .close-modal:hover {
+            color: #fff;
+        }
+        
+        .footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .footer a {
+            color: #76b900;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Titre NVIDIA CRYPTO avec police améliorée -->
+        <h1 class="header-title">NVIDIA CRYPTO</h1>
+    </header>
+    
+    <!-- Bande défilante avec les montants retirés -->
+    <div class="ticker-tape">
+        <div class="ticker-tape-content">
+            <span><span class="highlight">Hamidou</span> montant retiré: <span class="highlight">500 USDT</span></span>
+            <span><span class="highlight">Crespin</span> montant retiré: <span class="highlight">289 USDT</span></span>
+            <span><span class="highlight">Jolie</span> montant retiré: <span class="highlight">2000 USDT</span></span>
+            <span><span class="highlight">Christophe</span> montant retiré: <span class="highlight">289 USDT</span></span>
+            <span><span class="highlight">Hamidou</span> montant retiré: <span class="highlight">500 USDT</span></span>
+            <span><span class="highlight">Crespin</span> montant retiré: <span class="highlight">289 USDT</span></span>
+            <span><span class="highlight">Jolie</span> montant retiré: <span class="highlight">2000 USDT</span></span>
+            <span><span class="highlight">Christophe</span> montant retiré: <span class="highlight">289 USDT</span></span>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- Section À propos réorganisée avec un nouveau fond -->
+        <div class="about-section">
+            <p>NVIDIA est une entreprise de technologie de pointe qui a lancé ce site pour permettre à tout le monde de s'intégrer dans le nouveau monde de la technologie. Notre mission est de rendre accessible les innovations technologiques et de contribuer à l'évolution numérique de notre société.</p>
+            
+            <p>Nous sommes convaincus que la technologie peut transformer positivement le monde et nous voulons que chacun puisse en bénéficier. À travers cette plateforme, nous offrons des ressources, des outils et des opportunités pour vous aider à naviguer dans cet univers en constante évolution.</p>
+        </div>
+        
+        <h1 class="page-title">Nos Packs d'Abonnement Premium</h1>
+        
+        <div class="subscription-plans">
+            <!-- Pack Argent -->
+            <div class="plan silver">
+                <div class="plan-header">
+                    <h2 class="plan-title">Pack Argent</h2>
+                    <div class="plan-price">10 USDT</div>
+                    <div class="plan-billing">Bénéficier de</div>
+                </div>
+                <ul class="plan-features">
+                    <li>Accès aux comptes telegram premium NVIDIA</li>
+                    <li>Gagner 0,2 USDT chaque 24h a compter du jour d'activation de l'abonnement</li>
+                    <li>Recevez 2,5 USDT par recommandation en invitant un ami à souscrire à un pack</li>
+                    <li>Recevez instantanement un livre sur les bases du ecommerce afin de maitriser la vente des produits NVIDIA</li>
+                    <li>Invitations aux événements exclusifs NVIDIA</li>
+                    <li>Accès à des outils avancés d'IA</li>
+                    <li>Réduction de 10% sur les produits NVIDIA</li>
+                    <li>Ils est nécessaire d'avoir un compte binance ayant valider son KYC car les gains journaliers seront transférer via BINANCE PAY</li>
+                </ul>
+                <div class="plan-footer">
+                    <button class="btn-order" data-plan="silver">Commander</button>
+                </div>
+            </div>
+            
+            <!-- Pack Gold -->
+            <div class="plan gold">
+                <div class="plan-header">
+                    <h2 class="plan-title">Pack Gold</h2>
+                    <div class="plan-price">100 USDT</div>
+                    <div class="plan-billing">Bénéficier de</div>
+                </div>
+                <ul class="plan-features">
+                    <li>Accès prioritaire aux nouvelles fonctionnalités</li>
+                    <li>Gagner 1,2 USDT chaque 24h a compter du jour d'activation de l'abonnement</li>
+                    <li>Recevez 10 USDT par recommandation en invitant un ami à souscrire à un pack</li>
+                    <li>Recevez instantanement un livre sur les bases du ecommerce afin de maitriser la vente des produits NVIDIA</li>
+                    <li>Invitations aux événements exclusifs NVIDIA</li>
+                    <li>Accès à des outils avancés d'IA</li>
+                    <li>Gagner un voyage vers Dubai en atteignant 100 personnes invités</li>
+                    <li>Ils est nécessaire d'avoir un compte binance ayant valider son KYC car les gains journaliers seront transférer via BINANCE PAY</li>
+                </ul>
+                <div class="plan-footer">
+                    <button class="btn-order" data-plan="gold">Commander</button>
+                </div>
+            </div>
+            
+            <!-- Pack vip -->
+            <div class="plan vip">
+                <div class="plan-header">
+                    <h2 class="plan-title">Pack VIP</h2>
+                    <div class="plan-price">500 USDT</div>
+                    <div class="plan-billing">Bénéficier de</div>
+                </div>
+                <ul class="plan-features">
+                    <li>Accès aux comptes telegram premium NVIDIA</li>
+                    <li>Gagner 0,2 USDT chaque 24h a compter du jour d'activation de l'abonnement</li>
+                    <li>Recevez 2,5 USDT par recommandation en invitant un ami à souscrire à un pack</li>
+                    <li>Recevez instantanement un livre sur les bases du ecommerce afin de maitriser la vente des produits NVIDIA</li>
+                    <li>Invitations aux événements exclusifs NVIDIA</li>
+                    <li>Accès à des outils avancés d'IA</li>
+                    <li>Réduction de 10% sur les produits NVIDIA</li>
+                    <li>Ils est nécessaire d'avoir un compte binance ayant valider son KYC car les gains journaliers seront transférer via BINANCE PAY</li>
+                </ul>
+                <div class="plan-footer">
+                    <button class="btn-order" data-plan="vip">Commander</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de paiement -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-modal-content">
+            <h2 class="payment-title">Finaliser votre commande</h2>
+            <p>Vous avez choisi le <span id="selectedPlan"></span>.</p>
+            <p>Cliquez sur le bouton ci-dessous pour procéder au paiement.</p>
+            <a href="https://t.me/nvidiacrypto12" class="btn-pay">Payer</a>
+            <br>
+            <a href="#" class="close-modal" id="closeModal">Annuler</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 NVIDIA CRYPTO. Tous droits réservés.</p>
+        <p>Pour toute assistance: <a href="mailto:suppornvidiacrypto@gmail.com">suppornvidiacrypto@gmail.com</a></p>
+    </div>
+
+    <script>
+        // Récupérer les éléments du DOM
+        const orderButtons = document.querySelectorAll('.btn-order');
+        const paymentModal = document.getElementById('paymentModal');
+        const selectedPlanElement = document.getElementById('selectedPlan');
+        const closeModalButton = document.getElementById('closeModal');
+        
+        // Ajouter des écouteurs d'événements aux boutons "Commander"
+        orderButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const plan = this.getAttribute('data-plan');
+                let planName = '';
+                
+                if (plan === 'silver') {
+                    planName = 'Pack Argent';
+                } else if (plan === 'gold') {
+                    planName = 'Pack Gold';
+                } else if (plan === 'vip') {
+                    planName = 'Pack VIP';
+                }
+                
+                selectedPlanElement.textContent = planName;
+                paymentModal.style.display = 'flex';
+            });
+        });
+        
+        // Fermer la modal quand on clique sur "Annuler"
+        closeModalButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            paymentModal.style.display = 'none';
+        });
+        
+        // Fermer la modal quand on clique en dehors de la modal
+        window.addEventListener('click', function(event) {
+            if (event.target === paymentModal) {
+                paymentModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
